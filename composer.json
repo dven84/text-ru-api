@@ -1,0 +1,19 @@
+{
+    "name": "text-params/text-ru-api",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Dmitry Krasun",
+            "email": "krasun.net@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^5.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^2.2"
+    },
+    "autoload": {
+        "psr-4": { "TextParams\\TextRu\\": "src/" }
+    }
+}

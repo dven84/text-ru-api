@@ -1,0 +1,4 @@
+suites:
+    api_suite:
+        namespace: TextParams\TextRu
+        psr4_prefix: TextParams\TextRu
