@@ -100,7 +100,10 @@ class Client
                 )->json()
             ;
 
-            return new CheckResult($textId, (float) $result['text_unique']);
+            $seoResult = isset($result['seo_check']) ? json_decode($result['seo_check'], true) : [];
+            $waterPercent = isset($seoResult['water_percent']) ? $seoResult['water_percent'] : 0;
+
+            return new CheckResult($textId, (float) $result['text_unique'], $waterPercent);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }

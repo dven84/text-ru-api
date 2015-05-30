@@ -52,9 +52,9 @@ class ClientSpec extends ObjectBehavior
     {
         $client
             ->post('http://api.text.ru/post', ['body' => ['uid' => '123', 'userkey' => 'abc', 'jsonvisible' => 'detail']])
-            ->willReturn(new Response(200, [], Stream::factory('{"text_unique":3.43}')))
+            ->willReturn(new Response(200, [], Stream::factory('{"text_unique":3.43, "seo_check": "{\"water_percent\": 12}"}')))
         ;
 
-        $this->tryGetResult(123)->shouldBeLike(new CheckResult(123, 3.43));
+        $this->tryGetResult(123)->shouldBeLike(new CheckResult(123, 3.43, 12));
     }
 }

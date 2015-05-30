@@ -15,15 +15,22 @@ class CheckResult
     private $uniquePercent;
 
     /**
+     * @var float
+     */
+    private $waterPercent;
+
+    /**
      * Constructor.
      *
      * @param string $textId
      * @param float $uniquePercent
+     * @param float $waterPercent
      */
-    public function __construct($textId, $uniquePercent)
+    public function __construct($textId, $uniquePercent, $waterPercent)
     {
         $this->textId = $textId;
         $this->uniquePercent = $uniquePercent;
+        $this->waterPercent = $waterPercent;
     }
 
     /**
@@ -40,5 +47,13 @@ class CheckResult
     public function getUniquePercent()
     {
         return $this->uniquePercent;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWaterPercent()
+    {
+        return $this->waterPercent;
     }
 }
