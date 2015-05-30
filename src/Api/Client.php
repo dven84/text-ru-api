@@ -92,18 +92,15 @@ class Client
     public function tryGetResult($textId)
     {
         try {
-            $result = $this
+            $result = (string) $this
                 ->client
                 ->post(
                     self::API_URI . 'post',
                     ['body' => ['uid' => $textId, 'userkey' => $this->apiKey, 'jsonvisible' => 'detail']]
-                )->json()
+                )->getBody()
             ;
 
-            $seoResult = isset($result['seo_check']) ? json_decode($result['seo_check'], true) : [];
-            $waterPercent = isset($seoResult['water_percent']) ? $seoResult['water_percent'] : 0;
-
-            return new CheckResult($textId, (float) $result['text_unique'], $waterPercent);
+            return $this->parseResult($result, $textId);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
@@ -132,6 +129,28 @@ class Client
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * Tries to parse result and returns object model.
+     *
+     * @param string $requestContent
+     * @param null|string $textId
+     *
+     * @return CheckResult
+     */
+    public function parseResult($requestContent, $textId = null)
+    {
+        $result = json_decode($requestContent, true);
+
+        $seoResult = isset($result['seo_check']) ? json_decode($result['seo_check'], true) : [];
+        $waterPercent = isset($seoResult['water_percent']) ? $seoResult['water_percent'] : 0;
+
+        if (null === $textId) {
+            $textId = $result['uid'];
+        }
+
+        return new CheckResult($textId, (float) $result['text_unique'], $waterPercent);
     }
 
     /**
@@ -169,7 +188,7 @@ class Client
             $data['copying'] =  'noadd';
         }
 
-        if (! empty($excludedDomains)) {
+        if (0 !== count($excludedDomains)) {
             $data['exceptdomain'] = implode(' ', $excludedDomains);
         }
 

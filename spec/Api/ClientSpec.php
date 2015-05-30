@@ -48,6 +48,14 @@ class ClientSpec extends ObjectBehavior
         $this->availableSymbols()->shouldBe(115);
     }
 
+    function it_should_parse_check_result()
+    {
+        $this
+            ->parseResult('{"uid": 123,"text_unique":3.43, "seo_check": "{\"water_percent\": 12}"}')
+            ->shouldBeLike(new CheckResult(123, 3.43, 12))
+        ;
+    }
+
     function it_should_return_result_by_text_unique_identifier(ClientInterface $client)
     {
         $client
