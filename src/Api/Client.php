@@ -74,7 +74,7 @@ class Client
 
             $result = $this->client->post(self::API_URI . 'post', ['body' => $data])->json();
 
-            return $result['text_uid'];
+            return $result;
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
