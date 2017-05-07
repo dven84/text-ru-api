@@ -125,7 +125,7 @@ class Client
                 ->json()
             ;
 
-            return $result['size'];
+            return $result;
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage(), $e->getCode(), $e);
         }
